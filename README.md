@@ -18,6 +18,48 @@ elx('button', 0)
   .subscribe((el, state) => el.textContent = state)
 ```
 
+## Concepts
+
+### Initial State
+
+Every element has its initial state.
+
+```js
+// for the counter example
+const initialState = 0
+const source = elx('button', initialState)
+```
+
+### Handler for events
+
+Notify your element with some data, of course it does not know how to handle the data for now.
+
+```js
+source.on('click', 1)
+```
+
+### Reducer
+
+Tell your element how to get the new state after each event.
+
+```js
+// since it's just a count
+// we simply add the currentState 
+// and the received data in event handler
+const reducer = (currentState, received) => currentState + received
+source.reduce(reducer)
+```
+
+### Subscribe
+
+Trigger when element's state got changed.
+
+```js
+source.subscribe((el, newState) => {
+  el.textContent = newState
+})
+```
+
 ## Contributing
 
 1. Fork it!
