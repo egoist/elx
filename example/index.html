@@ -1,10 +1,20 @@
 <button id="example1">0</button>
+<button id="example2">0</button>
 
 <script src="../dist/elx.js"></script>
 <script>
   const {elx} = Elx
-  elx('button', 0)
+  var example1 = elx('#example1', 0)
     .on('click', 1)
+    .reduce((state, received) => state + received)
+    .subscribe((el, state) => el.textContent = state)
+
+  var example2 = elx('#example2', 0)
+    .on('click', () => {
+      return new Promise(resolve => setTimeout(() => {
+        resolve(1)
+      }, 1000))
+    })
     .reduce((state, received) => state + received)
     .subscribe((el, state) => el.textContent = state)
 </script>

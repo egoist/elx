@@ -16,7 +16,7 @@ export default class Elx {
   }
 
   subscribe(runAsStateChanges) {
-    window.addEventListener(this.type, e => {
+    this.el.addEventListener(this.type, e => {
       if (typeof this.getNewState === 'function') {
         const newState = this.getNewState(e)
         if (newState.then) {
@@ -30,11 +30,14 @@ export default class Elx {
         this.run(runAsStateChanges, this.getNewState)
       }
     }, false)
+
+    return this
   }
 
   run(runAsStateChanges, newState) {
     this.state = this.handler(this.state, newState)
     runAsStateChanges(this.el, this.state)
+    return this
   }
 }
 
