@@ -1,0 +1,10 @@
+<button id="example1">0</button>
+
+<script src="../dist/elx.js"></script>
+<script>
+  const {elx} = Elx
+  elx('button', 0)
+    .on('click', 1)
+    .reduce((state, received) => state + received)
+    .subscribe((el, state) => el.textContent = state)
+</script>
