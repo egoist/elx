@@ -1,6 +1,8 @@
 export default class Elx {
   constructor(selector, initialState) {
-    this.el = document.querySelector(selector)
+    this.el = typeof selector === 'string' ?
+      document.querySelector(selector) :
+      selector
     this.state = initialState
   }
 
