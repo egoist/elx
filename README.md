@@ -40,7 +40,7 @@ source.on('click', 1)
 
 ### Reducer
 
-Tell your element how to get the new state after each event.
+Tell your element how to get the new state after received data from event hander.
 
 ```js
 // since it's just a count
