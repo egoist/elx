@@ -38,7 +38,7 @@ Notify your element with some data, of course it does not know how to handle the
 source.on('click', 1)
 ```
 
-Sure the event handler can be a function or event a Promise that resolves the data.
+Sure the event handler can be a function or even a Promise that resolves the data.
 
 ```js
 source.on('click', () => {
@@ -53,9 +53,9 @@ source.on('click', () => {
 Tell your element how to get the new state after received data from event hander.
 
 ```js
-// since it's just a count
-// we simply add the currentState 
-// and the received data in event handler
+// since it's just a counter
+// we simply add the received data in event handler
+// to the currentState 
 const reducer = (currentState, received) => currentState + received
 source.reduce(reducer)
 ```
