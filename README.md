@@ -38,6 +38,16 @@ Notify your element with some data, of course it does not know how to handle the
 source.on('click', 1)
 ```
 
+Sure the event handler can be a function or event a Promise that resolves the data.
+
+```js
+source.on('click', () => {
+  return new Promise(resolve => setTimeout(() => {
+    resolve(1)
+  }, 1000))
+})
+```
+
 ### Reducer
 
 Tell your element how to get the new state after received data from event hander.
