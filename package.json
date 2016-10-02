@@ -24,6 +24,7 @@
     ""
   ],
   "devDependencies": {
+    "bili": "^0.6.2",
     "eslint": "latest",
     "eslint-config-egoist": "latest"
   },
