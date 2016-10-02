@@ -1,20 +1,30 @@
+<h2>dom events</h2>
 <button id="example1">0</button>
 <button id="example2">0</button>
+
+<h2>custom events</h2>
+<button id="example3" onclick="example4.dispatch('increment')">Click me to trigger custom event</button>
+<button id="example4">0</button>
 
 <script src="../dist/elx.js"></script>
 <script>
   const {elx} = Elx
   var example1 = elx('#example1', 0)
-    .on('click', 1)
+    .fromDOMEvent('click', 1)
     .reduce((state, received) => state + received)
     .subscribe((el, state) => el.textContent = state)
 
   var example2 = elx('#example2', 0)
-    .on('click', () => {
+    .fromDOMEvent('click', () => {
       return new Promise(resolve => setTimeout(() => {
         resolve(1)
       }, 1000))
     })
+    .reduce((state, received) => state + received)
+    .subscribe((el, state) => el.textContent = state)
+
+  var example4 = elx('#example4', 0)
+    .on('increment', 1)
     .reduce((state, received) => state + received)
     .subscribe((el, state) => el.textContent = state)
 </script>

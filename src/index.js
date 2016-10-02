@@ -1,5 +1,8 @@
-export default class Elx {
+import Event from './event'
+
+export default class Elx extends Event {
   constructor(selector, initialState) {
+    super()
     this.el = typeof selector === 'string' ?
       document.querySelector(selector) :
       selector
@@ -12,13 +15,23 @@ export default class Elx {
     return this
   }
 
+  fromDOMEvent(type, getNewState) {
+    this._fromDOMEvent = true
+    this.on(type, getNewState)
+    return this
+  }
+
   reduce(handler) {
     this.handler = handler
     return this
   }
 
   subscribe(runAsStateChanges) {
-    this.el.addEventListener(this.type, e => {
+    const el = this._fromDOMEvent ?
+      this.el :
+      this
+
+    el.addEventListener(this.type, e => {
       if (typeof this.getNewState === 'function') {
         const newState = this.getNewState(e)
         if (newState.then) {

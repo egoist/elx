@@ -13,7 +13,7 @@ import {elx} from 'elx'
 
 // a counter in 4 lines
 elx('button', 0)
-  .on('click', 1)
+  .fromDOMEvent('click', 1)
   .reduce((state, received) => state + received)
   .subscribe((el, state) => el.textContent = state)
 ```
@@ -35,13 +35,17 @@ const source = elx('button', initialState)
 Notify your element with some data, of course it does not know how to handle the data for now.
 
 ```js
-source.on('click', 1)
+source.fromDOMEvent('click', 1)
+// or custom action
+source.on('increment', 1)
 ```
+
+If you are using custom action, you can use `source.dispatch(ACTION)` to trigger that action!
 
 Sure the event handler can be a function or even a Promise that resolves the data.
 
 ```js
-source.on('click', () => {
+source.fromDOMEvent('click', () => {
   return new Promise(resolve => setTimeout(() => {
     resolve(1)
   }, 1000))
