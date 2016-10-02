@@ -1,6 +1,6 @@
 {
   "name": "elx",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "State management for a single dom element.",
   "license": "MIT",
   "repository": "egoist/elx",
