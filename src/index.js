@@ -9,7 +9,7 @@ export default class Elx extends Event {
     this.state = initialState
   }
 
-  on(type, getNewState) {
+  fromAction(type, getNewState) {
     this.type = type
     this.getNewState = getNewState
     return this
@@ -17,7 +17,7 @@ export default class Elx extends Event {
 
   fromDOMEvent(type, getNewState) {
     this._fromDOMEvent = true
-    this.on(type, getNewState)
+    this.fromAction(type, getNewState)
     return this
   }
 
