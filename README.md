@@ -36,11 +36,7 @@ Notify your element with some data, of course it does not know how to handle the
 
 ```js
 source.fromDOMEvent('click', 1)
-// or custom action
-source.on('increment', 1)
 ```
-
-If you are using custom action, you can use `source.dispatch(ACTION)` to trigger that action!
 
 Sure the event handler can be a function or even a Promise that resolves the data.
 
@@ -51,6 +47,16 @@ source.fromDOMEvent('click', () => {
   }, 1000))
 })
 ```
+
+### Handler for actions
+
+Abosolutely you can use custom actions, because you need cross-element communications!
+
+```js
+source.on('increment', 1)
+```
+
+If you are using custom action, you can use `source.dispatch(ACTION)` to trigger that action!
 
 ### Reducer
 
