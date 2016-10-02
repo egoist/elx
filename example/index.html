@@ -3,7 +3,7 @@
 <button id="example2">0</button>
 
 <h2>custom events</h2>
-<button id="example3" onclick="example4.dispatch('increment')">Click me to trigger custom event</button>
+<button id="example3" onclick="example4.dispatch('INCREMENT')">Click me to trigger custom event</button>
 <button id="example4">0</button>
 
 <script src="../dist/elx.js"></script>
@@ -24,7 +24,7 @@
     .subscribe((el, state) => el.textContent = state)
 
   var example4 = elx('#example4', 0)
-    .on('increment', 1)
+    .fromAction('INCREMENT', 1)
     .reduce((state, received) => state + received)
     .subscribe((el, state) => el.textContent = state)
 </script>

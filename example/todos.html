@@ -1,0 +1,32 @@
+<input type="text" id="input">
+<ul id="list">
+  <li class="todo">
+    Conquer the world
+  </li>
+  <li class="todo">
+    Rule the web
+  </li>
+  <li class="todo">
+    Meet my girl
+  </li>
+</ul>
+
+<script src="../dist/elx.js"></script>
+<script>
+  const {elx} = Elx
+
+  const listStream = elx('#list', [])
+    .fromAction('ADD_TODO', todo => todo)
+    .reduce((current, received) => [received].concat(current))
+    .subscribe((el, state) => {
+      el.innerHTML = state.map(todo => `<li>${todo}</li>`)
+    })
+
+  elx('#input', '')
+    .fromDOMEvent('keydown', e => {
+      if (e.which === 13) {
+        listStream.dispatch('ADD_TODO', e.target.value)
+        e.target.value = ''
+      }
+    })
+</script>
