@@ -12,10 +12,15 @@ $ npm install --save elx
 import {elx} from 'elx'
 
 // a counter in 4 lines
-elx('button', 0)
+const button = elx('button', 0)
   .fromDOMEvent('click', 1)
   .reduce((state, received) => state + received)
   .subscribe((el, state) => el.textContent = state)
+
+// button is reusable
+// listen for a custom action
+button.fromAction('clear')
+  .subscribe(el => el.textContent = 0)
 ```
 
 ## Concepts
