@@ -1,6 +1,6 @@
 export default class Event {
   constructor() {
-    this.events = []
+    this.events = {}
   }
 
   addEventListener(type, fn) {

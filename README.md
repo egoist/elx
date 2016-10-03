@@ -53,10 +53,10 @@ source.fromDOMEvent('click', () => {
 Abosolutely you can use custom actions, because you need cross-element communications!
 
 ```js
-source.fromAction('INCREMENT', 1)
+source.fromAction('increment', 1)
 ```
 
-If you are using custom action, you can use `source.dispatch(ACTION)` to trigger that action! Action names are all caps.
+If you are using custom action, you can use `source.dispatch(action)` to trigger that action!
 
 ### Reducer
 

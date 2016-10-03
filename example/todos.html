@@ -19,7 +19,7 @@
     .fromAction('ADD_TODO', todo => todo)
     .reduce((current, received) => [received].concat(current))
     .subscribe((el, state) => {
-      el.innerHTML = state.map(todo => `<li>${todo}</li>`)
+      el.innerHTML = state.map(todo => `<li>${todo}</li>`).join('')
     })
 
   elx('#input', '')

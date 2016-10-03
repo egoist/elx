@@ -7,26 +7,31 @@ export default class Elx extends Event {
       document.querySelector(selector) :
       selector
     this.state = initialState
-    this.subscribers = []
+    this.sources = []
   }
 
-  fromAction(type, getNewState) {
-    this.type = type
-    this.getNewState = getNewState
+  fromAction(type, getNewState, fromEvent) {
+    this.sources.push({
+      type,
+      getNewState,
+      fromEvent
+    })
 
-    const el = this._fromDOMEvent ? this.el : this
-    el.addEventListener(this.type, (...args) => {
-      if (typeof this.getNewState === 'function') {
-        const newState = this.getNewState(...args)
+    const currentSourceIndex = this.sources.length - 1
+
+    const el = fromEvent ? this.el : this
+    el.addEventListener(type, (...args) => {
+      if (typeof getNewState === 'function') {
+        const newState = getNewState(...args)
         if (newState && newState.then) {
           newState.then(actualNewState => {
-            this.run(actualNewState)
+            this.run(currentSourceIndex, actualNewState)
           })
         } else {
-          this.run(newState)
+          this.run(currentSourceIndex, newState)
         }
       } else {
-        this.run(this.getNewState)
+        this.run(currentSourceIndex, getNewState)
       }
     }, false)
 
@@ -34,29 +39,28 @@ export default class Elx extends Event {
   }
 
   fromDOMEvent(type, getNewState) {
-    this._fromDOMEvent = true
-    this.fromAction(type, getNewState)
-
+    this.fromAction(type, getNewState, true)
     return this
   }
 
   reduce(handler) {
-    this.handler = handler
+    this.sources[this.sources.length - 1].handler = handler
     return this
   }
 
   subscribe(subscriber) {
-    this.subscribers.push(subscriber)
-    this.run()
+    this.sources[this.sources.length - 1].subscriber = subscriber
+    this.run(this.sources.length - 1)
     return this
   }
 
-  run(newState) {
-    for (const subscriber of this.subscribers) {
-      this.state = (this.handler && typeof newState !== 'undefined') ?
-        this.handler(this.state, newState) :
-        this.state
-      subscriber(this.el, this.state)
+  run(currentSourceIndex, newState) {
+    const source = this.sources[currentSourceIndex]
+    this.state = (source.handler && typeof newState !== 'undefined') ?
+      source.handler(this.state, newState) :
+      this.state
+    if (source.subscriber) {
+      source.subscriber(this.el, this.state)
     }
     return this
   }

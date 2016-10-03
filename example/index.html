@@ -1,10 +1,14 @@
 <h2>dom events</h2>
-<button id="example1">0</button>
-<button id="example2">0</button>
+<button id="example1">should be invisble text</button>
+<button id="example2">should be invisble text</button>
 
 <h2>custom events</h2>
 <button id="example3" onclick="example4.dispatch('INCREMENT')">Click me to trigger custom event</button>
-<button id="example4">0</button>
+<button id="example4">should be invisble text</button>
+
+<h2>reusable stream</h2>
+<button id="stream1">should be invisble text</button>
+<button id="example5">reset</button>
 
 <script src="../dist/elx.js"></script>
 <script>
@@ -14,7 +18,7 @@
     .reduce((state, received) => state + received)
     .subscribe((el, state) => el.textContent = state)
 
-  var example2 = elx('#example2', 0)
+  const example2 = elx('#example2', 0)
     .fromDOMEvent('click', () => {
       return new Promise(resolve => setTimeout(() => {
         resolve(1)
@@ -23,8 +27,20 @@
     .reduce((state, received) => state + received)
     .subscribe((el, state) => el.textContent = state)
 
-  var example4 = elx('#example4', 0)
+  const example4 = elx('#example4', 0)
     .fromAction('INCREMENT', 1)
     .reduce((state, received) => state + received)
     .subscribe((el, state) => el.textContent = state)
+
+  const stream1 = elx('#stream1', 0)
+  stream1
+    .fromDOMEvent('click', 1)
+    .reduce((current, received) => current + received)
+    .subscribe((el, state) => el.textContent = state)
+  stream1
+    .fromAction('reset')
+    .subscribe(el => el.textContent = 0)
+
+  const example5 = elx('#example5')
+  example5.fromDOMEvent('click', () => stream1.dispatch('reset'))
 </script>
