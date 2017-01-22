@@ -55,7 +55,7 @@ source.fromDOMEvent('click', () => {
 
 ### Handler for actions
 
-Abosolutely you can use custom actions, because you need cross-element communications!
+Absolutely you can use custom actions, because you need cross-element communications!
 
 ```js
 source.fromAction('increment', 1)
